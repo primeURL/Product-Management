@@ -1,6 +1,7 @@
 const express = require('express')
 const connectDB = require('./db/index.js')
 const {config} = require('dotenv')
+const errorMiddleWare = require('./middlewares/error.js')
 const userRoutes = require('./routes/user.js')
 const app = express();
 
@@ -20,7 +21,9 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api/v1/user", userRoutes);
-// app.use("/api/v1/product", productRoutes);
+
+// Middleware for handling errors
+app.use(errorMiddleWare);
 
 app.listen(port, () => {
   console.log(`Express is working on http://localhost:${port}`);
