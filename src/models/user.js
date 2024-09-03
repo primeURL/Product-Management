@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const validator = require('validator')
 
 const userSchema = new mongoose.Schema(
     {
@@ -10,16 +9,16 @@ const userSchema = new mongoose.Schema(
       email: {
         type: String,
         unique: [true, "Email already Exist"],
-        required: [true, "Please enter Email"],
-        validate: validator.default.isEmail,
+        required: [true, "Please enter Email"]
       },
       password : {
         type : String,
         required: [true, "Please enter Password"],
       },
-      isAdmin : {
-        type : Boolean,
-        default : false
+      role : {
+        type : String,
+        enum : ['admin','user'],
+        default : 'user'
       }
     },
     {

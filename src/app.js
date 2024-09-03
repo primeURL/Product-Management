@@ -3,6 +3,7 @@ const connectDB = require('./db/index.js')
 const {config} = require('dotenv')
 const errorMiddleWare = require('./middlewares/error.js')
 const userRoutes = require('./routes/user.js')
+const productRoutes = require('./routes/products.js')
 const app = express();
 
 config({path : "./.env"})
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/products", productRoutes);
 
 // Middleware for handling errors
 app.use(errorMiddleWare);
