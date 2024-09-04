@@ -79,6 +79,7 @@ const approveProducts = async(req,res,next) => {
     }
 }
 const displayAdminApprovedProducts = async(req,res,next) => {
+    console.log(req.body)
     try {
         const products = await Product.find({isDisplayed : true})
         if(!products){

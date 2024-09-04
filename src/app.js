@@ -18,14 +18,14 @@ app.use(express.json())
 app.use(morgan('dev'))
 
 // Test Route
-app.get("/", (req, res) => {
-    res.send("API is working");
+app.get('/', (req, res) => {
+    res.send('API is working');
 });
 
 
 // Routes
-app.use("/api/v1/user", userRoutes);
-app.use("/api/v1/products", productRoutes);
+app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/products', productRoutes);
 
 
 // Middleware for handling errors when an error is passed to next(err) 
