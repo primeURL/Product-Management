@@ -12,12 +12,14 @@ router.post('/signup-user', signUpUser);
 // route - /api/v1/user/signin
 router.post('/signin', signInUser);
 
-// route - /api/v1/user/update/id?adminId=1234
+// route - /api/v1/user/update/userId?adminId=1234
 router.put('/update/:userId',adminOnly, updateUser);
 
-// route - /api/v1/user/delete/id?adminId=1234
+// route - /api/v1/user/delete/userId?adminId=1234
 router.delete('/delete/:userId',adminOnly, deleteUser);
 
+
+// This is test route
 // route - /api/v1/user/all
 router.get('/all',getAllUser)
 

@@ -1,20 +1,23 @@
 const express = require('express')
 const connectDB = require('./db/index.js')
 const {config} = require('dotenv')
-const errorMiddleWare = require('./middlewares/error.js')
+config({path : "./.env"})
+const {errorMiddleWare,missingRouteMiddleWare} = require('./middlewares/index.js')
+const morgan = require('morgan')
 const userRoutes = require('./routes/user.js')
 const productRoutes = require('./routes/products.js')
 const app = express();
 
-config({path : "./.env"})
+
 
 const port = process.env.PORT || 4000
 
-connectDB(process.env.MONGO_URI);
+// connectDB(process.env.MONGO_URI);
 
 app.use(express.json())
+app.use(morgan('dev'))
 
-
+// Test Route
 app.get("/", (req, res) => {
     res.send("API is working");
 });
@@ -24,9 +27,14 @@ app.get("/", (req, res) => {
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/products", productRoutes);
 
-// Middleware for handling errors
+
+// Middleware for handling errors when an error is passed to next(err) 
 app.use(errorMiddleWare);
 
-app.listen(port, () => {
+// Middlewar for handling mis-match route
+app.use(missingRouteMiddleWare);
+
+app.listen(port, async() => {
+  await connectDB(process.env.MONGO_URI);
   console.log(`Express is working on http://localhost:${port}`);
 });

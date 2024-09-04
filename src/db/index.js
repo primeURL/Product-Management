@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 
-const connectDB = (uri) => {
-    mongoose
-      .connect(uri, {
-        dbName: "Product_Management",
-      })
-      .then((c) => console.log(`DB Connected to ${c.connection.host}`))
-      .catch((e) => console.log(e));
-  };
+const connectDB = async (uri) => {
+    try {
+      const result = await mongoose.connect(uri, {dbName: "Product_Management"})
+      console.log(`DB Connected to MongoDB${result.connection.host}`)
+    } catch (error) {
+      console.log(error)
+    }
+};
 
   module.exports = connectDB

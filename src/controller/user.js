@@ -8,9 +8,9 @@ const signUpAdmin = async(req,res,next) => {
         if(!name || !email || !password){
             return next(new ErrorHandler('Please add all Fileds',400))
         }
-        let admin = await User.findOne({ email: req.body.email });
-		if(admin){
-             return next(new ErrorHandler('Admin with given email already Exist',409))
+        let admin = await User.find({role : 'admin'});
+		if(admin.length){
+             return next(new ErrorHandler('Admin has already created. Only One Admin Allowed.',409))
         }
         const hashPassword = await bcrypt.hash(req.body.password,10);
 		admin = await new User({ ...req.body, password: hashPassword, role : 'admin' }).save();
@@ -28,7 +28,7 @@ const signUpUser = async(req,res,next) => {
             return next(new ErrorHandler('Please add all Fileds',400))
         }
         let user = await User.findOne({ email: req.body.email });
-		if (user){
+		if(user){
              return next(new ErrorHandler('User with given email already Exist',409))
         }
         if(req.body.role === 'admin'){
@@ -57,8 +57,7 @@ const signInUser = async(req,res,next) => {
 		if (!validPassword){
             return next(new ErrorHandler('Invalid Email or Password',401))
         }
-        
-        return res.status(200).json({ message: 'User SignedIn Successfully',token : '12345' ,user})
+        return res.status(200).json({ message: 'User SignedIn Successfully', user})
 
     } catch (error) {
         next(error)
@@ -68,15 +67,17 @@ const signInUser = async(req,res,next) => {
 const updateUser = async(req,res,next) => {
     try {
         const {userId} = req.params
-        const {name,email,password} = req.body
+        console.log(req.body)
+        const {name,email,password,role} = req.body
         const user = await User.findById(userId)
 
         if(!user){
             return next(new ErrorHandler('Invalid User Id',400))
         }
-        
+        console.log('role',role)
         if(name) user.name = name
         if(email) user.email = email
+        if(role) user.role = role
         if(password){
 		    const hashPassword = await bcrypt.hash(password,10);
             user.password = hashPassword
@@ -104,6 +105,8 @@ const deleteUser = async(req,res,next) => {
         return next(error)
     }
 }
+
+// This is test route
 const getAllUser = async(req,res,next) =>{
     try {
         const user = await User.find({});

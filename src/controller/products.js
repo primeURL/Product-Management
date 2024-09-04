@@ -9,7 +9,7 @@ const createProduct = async(req,res,next)=>{
         }
         let product = await Product.findOne({ title: req.body.title });
 		if(product){
-             return next(new ErrorHandler('Product already Exist with same title',409))
+             return next(new ErrorHandler('Product already Exist',409))
         }
         if(req.body.isDisplayed){
             return next(new ErrorHandler('User can not set display property true',409))

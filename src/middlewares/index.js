@@ -17,5 +17,18 @@ const adminOnly = async(req,res,next) => {
 
 }
 
+const errorMiddleWare = (err,req,res,next) => {
+    err.message = err.message || "Internal Server Error"
+    err.statusCode = err.statusCode || 500
 
-module.exports = {adminOnly}
+    return res.status(err.statusCode).json({
+      message: err.message
+    });
+}
+
+const missingRouteMiddleWare = (req,res,next) => {
+    res.status(404).json({ message: 'Route not found'});
+}
+
+
+module.exports = {adminOnly,errorMiddleWare,missingRouteMiddleWare}
