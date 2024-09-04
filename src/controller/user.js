@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcrypt');
 const ErrorHandler = require('../features/utility-class')
 
 const signUpAdmin = async(req,res,next) => {
@@ -26,10 +26,6 @@ const signUpUser = async(req,res,next) => {
         const {name,email,password} = req.body
         if(!name || !email || !password){
             return next(new ErrorHandler('Please add all Fileds',400))
-        }
-        let user = await User.findOne({ email: req.body.email });
-		if(user){
-             return next(new ErrorHandler('User with given email already Exist',409))
         }
         if(req.body.role === 'admin'){
             return next(new ErrorHandler('User can not have admin role',409))
@@ -67,14 +63,12 @@ const signInUser = async(req,res,next) => {
 const updateUser = async(req,res,next) => {
     try {
         const {userId} = req.params
-        console.log(req.body)
         const {name,email,password,role} = req.body
         const user = await User.findById(userId)
 
         if(!user){
             return next(new ErrorHandler('Invalid User Id',400))
         }
-        console.log('role',role)
         if(name) user.name = name
         if(email) user.email = email
         if(role) user.role = role

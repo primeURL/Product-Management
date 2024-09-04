@@ -4,16 +4,16 @@ const userSchema = new mongoose.Schema(
     {
       name: {
         type: String,
-        required: [true, "Please enter Name"],
+        required: [true, 'Please enter Name'],
       },
       email: {
         type: String,
-        unique: [true, "Email already Exist"],
-        required: [true, "Please enter Email"]
+        unique: [true, 'Email already Exist'],
+        required: [true, 'Please enter Email']
       },
       password : {
         type : String,
-        required: [true, "Please enter Password"],
+        required: [true, 'Please enter Password'],
       },
       role : {
         type : String,
