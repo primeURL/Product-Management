@@ -1,9 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const {adminOnly} = require('../middlewares/index')
-
 const {createProduct,allProducts,updateProduct,deleteProduct,displayAdminApprovedProducts,approveProducts} = require('../controller/products')
-
 
 // route - /api/v1/products/displayProducts
 router.get('/displayProducts', displayAdminApprovedProducts);
@@ -21,12 +19,9 @@ router.put('/update/:productId',adminOnly, updateProduct);
 router.delete('/delete/:productId',adminOnly, deleteProduct);
 
 
-
 // This is Test Route
 // route - /api/v1/products/all
 router.get('/all', allProducts);
-
-
 
 
 module.exports = router

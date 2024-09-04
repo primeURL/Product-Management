@@ -36,5 +36,4 @@ const missingRouteMiddleWare = (req,res,next) => {
     res.status(404).json({ message: 'Route not found'});
 }
 
-
 module.exports = {adminOnly,errorMiddleWare,missingRouteMiddleWare}

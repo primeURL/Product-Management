@@ -8,11 +8,7 @@ const userRoutes = require('./routes/user.js')
 const productRoutes = require('./routes/products.js')
 const app = express();
 
-
-
 const port = process.env.PORT || 4000
-
-// connectDB(process.env.MONGO_URI);
 
 app.use(express.json())
 app.use(morgan('dev'))
